@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MacroTrack</string>
+    <string name="action_settings">Settings</string>
 </resources>

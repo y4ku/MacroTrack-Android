@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Throwable t) {
                 //something went completely south (like no internet connection)
                 Log.d("Error", t.getMessage());
+                progressDialog.dismiss();
             }
         });
     }
