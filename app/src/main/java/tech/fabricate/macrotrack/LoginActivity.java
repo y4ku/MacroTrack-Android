@@ -1,5 +1,6 @@
 package tech.fabricate.macrotrack;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +42,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(String username, String password) {
+        final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
+                R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Authenticating...");
+        progressDialog.show();
+
         LoginService service = ServiceGenerator.createService(LoginService.class);
         Call<User> callService = service.loginUser(new LoginRequest(username, password));
         callService.enqueue(new Callback<User>() {
@@ -51,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     // error response, no access to resource?
                 }
+                progressDialog.dismiss();
             }
 
             @Override
