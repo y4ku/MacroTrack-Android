@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">MacroTrack</string>
     <string name="action_settings">Settings</string>
+    <string name="login_button">Login</string>
+    <string name="signup_button">Register</string>
+    <string name="signup_back_button">Already a Member? Log In!</string>
+    <string name="login_signup_button">No Account? Sign Up!</string>
 </resources>
