@@ -5,4 +5,7 @@
     <string name="signup_button">Register</string>
     <string name="signup_back_button">Already a Member? Log In!</string>
     <string name="login_signup_button">No Account? Sign Up!</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>

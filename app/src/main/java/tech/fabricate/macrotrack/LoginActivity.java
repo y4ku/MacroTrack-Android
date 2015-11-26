@@ -2,6 +2,8 @@ package tech.fabricate.macrotrack;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,14 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.io.IOException;
-
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.Response;
 import retrofit.Retrofit;
 import tech.fabricate.macrotrack.rest.ServiceGenerator;
-import tech.fabricate.macrotrack.rest.model.LoginRequest;
+import tech.fabricate.macrotrack.rest.requests.LoginRequest;
 import tech.fabricate.macrotrack.rest.model.User;
 import tech.fabricate.macrotrack.rest.service.LoginService;
 
@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void login(String username, String password) {
+    public void login(String email, String password) {
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
@@ -64,12 +64,20 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.show();
 
         LoginService service = ServiceGenerator.createService(LoginService.class);
-        Call<User> callService = service.loginUser(new LoginRequest(username, password));
+        Call<User> callService = service.loginUser(new LoginRequest(email, password));
         callService.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Response<User> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
-                        Log.d("Retrofit", response.body().getMessage());
+                    Log.d("Retrofit", response.body().getMessage());
+                    String token = response.body().getToken();
+                    Boolean success = response.body().getSuccess();
+                    if (success && token != null) {
+                        saveJWTToken(token);
+
+                        Intent intent = new Intent(LoginActivity.this, TodayActivity.class);
+                        startActivity(intent);
+                    }
                 } else {
                     // error response, no access to resource?
                 }
@@ -84,5 +92,20 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        // disable going back to the MainActivity
+        moveTaskToBack(true);
+    }
+
+    public void saveJWTToken(String token) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("jwt", token);
+        editor.commit();
+    }
+
 
 }

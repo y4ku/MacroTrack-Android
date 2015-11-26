@@ -1,23 +1,23 @@
-package tech.fabricate.macrotrack.rest.model;
+package tech.fabricate.macrotrack.rest.requests;
 
 /**
  * Created by y4ku on 11/22/15.
  */
 public class LoginRequest {
-    private String username;
+    private String email;
     private String password;
 
-    public LoginRequest(String username, String password) {
-        this.username = username;
+    public LoginRequest(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
