@@ -25,7 +25,7 @@
             android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".TodayActivity"
-            android:theme="@style/AppTheme.Dark" />
+            android:theme="@style/AppTheme.LoggedIn" />
     </application>
 
 </manifest>
