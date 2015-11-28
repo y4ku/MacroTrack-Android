@@ -1,5 +1,6 @@
 package tech.fabricate.macrotrack;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -60,7 +61,11 @@ public class TodayActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(TodayActivity.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TodayActivity.this, "Time for an upgrade! " + id, Toast.LENGTH_SHORT).show();
+                if(id == 3) {
+                    Intent intent = new Intent(TodayActivity.this, RecipeActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }

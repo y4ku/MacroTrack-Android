@@ -26,6 +26,9 @@
         <activity
             android:name=".TodayActivity"
             android:theme="@style/AppTheme.LoggedIn" />
+        <activity
+            android:name=".RecipeActivity"
+            android:theme="@style/AppTheme.LoggedIn" />
     </application>
 
 </manifest>
