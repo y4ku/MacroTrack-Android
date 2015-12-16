@@ -82,7 +82,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/macrolabel">
+            android:layout_below="@+id/macrolabel"
+            android:id="@+id/linearLayout2">
 
             <TextView
                 android:layout_width="0dp"
@@ -110,6 +111,30 @@
                 android:layout_weight=".33"
                 android:id="@+id/fatAmount"
                 android:textAlignment="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linearLayout2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="49dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Macro"
+                android:id="@+id/addMacroButton"
+                android:layout_gravity="center_horizontal" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Recipe"
+                android:id="@+id/addRecipeButton"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
     </RelativeLayout>
 

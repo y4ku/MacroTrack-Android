@@ -6,13 +6,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import tech.fabricate.macrotrack.rest.model.Ingredient;
 
 public class TodayActivity extends AppCompatActivity {
 
@@ -27,13 +31,19 @@ public class TodayActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
 
+    private Button addMacroButton;
+    private Button addRecipeButton;
+
+    static final int CREATE_RECIPE = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today);
 
-        mDrawerList = (ListView)findViewById(R.id.navList);mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView)findViewById(R.id.navList);
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
         mActivityTitle = getTitle().toString();
 
         addDrawerItems();
@@ -51,10 +61,49 @@ public class TodayActivity extends AppCompatActivity {
         proteinAmount.setText("32");
         carbAmount.setText("50");
         fatAmount.setText("9");
+
+
+        setupMacroButtons();
+    }
+
+    private void setupMacroButtons() {
+        addMacroButton = (Button) findViewById(R.id.addMacroButton);
+        addRecipeButton = (Button) findViewById(R.id.addRecipeButton);
+
+        addMacroButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TodayActivity.this, RecipeActivity.class);
+                startActivityForResult(intent, CREATE_RECIPE);
+            }
+        });
+
+        addRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TodayActivity.this, RecipeActivity.class);
+                startActivityForResult(intent, CREATE_RECIPE);
+            }
+        });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        if (requestCode == CREATE_RECIPE) {
+            if (resultCode == RESULT_OK) {
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+                    Ingredient ingredient = extras.getParcelable("ingredient");
+                    Log.d("activity result", ingredient.getFood_description());
+                } else {
+                    Log.d("activity result", "Extras was null");
+                }
+            }
+        }
     }
 
     private void addDrawerItems() {
-        String[] navigationArray = {"Macro View", "Set Macros", "Add Recipe", "Add Ingredients"};
+        String[] navigationArray = {"Nav 1", "Nav 2", "Nav 3", "Nav 4"};
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, navigationArray);
         mDrawerList.setAdapter(mAdapter);
 
@@ -62,10 +111,6 @@ public class TodayActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(TodayActivity.this, "Time for an upgrade! " + id, Toast.LENGTH_SHORT).show();
-                if(id == 3) {
-                    Intent intent = new Intent(TodayActivity.this, RecipeActivity.class);
-                    startActivity(intent);
-                }
             }
         });
     }
